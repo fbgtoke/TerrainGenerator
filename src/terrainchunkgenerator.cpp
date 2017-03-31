@@ -23,7 +23,9 @@ TerrainChunk* TerrainChunkGenerator::generate(int origin_x, int origin_y) {
 			float frequency = 1.f;
 			float amplitude = 1.f;
 			float max       = 0.f;
-			for (int n = 1; n <= octaves; ++n) {
+
+			unsigned int n;
+			for (n = 1; n <= octaves; ++n) {
 				height += simplex->noise(offx * frequency, offy * frequency) * amplitude;
 
 				max += amplitude;

@@ -22,9 +22,14 @@ void TerrainChunkLoader::identifier2coords(int& x, int& y, unsigned int id) {
 TerrainChunk* TerrainChunkLoader::generate(int offx, int offy, 
 																						unsigned int seed) {
 	
+	std::cout << "Generating chunk" << std::endl;
+
 	TerrainChunkGenerator* generator = new TerrainChunkGenerator(seed);
 	TerrainChunk* chunk = generator->generate(offy, offx);
 	delete generator;
+
+	std::cout << "Generated" << std::endl;
+	
 	return chunk;
 }
 
