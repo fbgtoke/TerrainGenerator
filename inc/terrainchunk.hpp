@@ -11,8 +11,8 @@ private:
 	int offset_x;
 	int offset_y;
 
-	float height[CHUNK_HEIGHT][CHUNK_WIDTH];
-	float moisture[CHUNK_HEIGHT][CHUNK_WIDTH];
+	matrix_t height;
+	matrix_t moisture;
 
 public:
 	TerrainChunk(int offx, int offy);
@@ -21,7 +21,8 @@ public:
 	static int getChunkWidth();
 	static int getChunkHeight();
 
-	unsigned int getIdentifier() const;
+	int getOffsetX() const;
+	int getOffsetY() const;
 
 	float getHeight(int x, int y) const;
 	float getMoisture(int x, int y) const;
@@ -29,7 +30,7 @@ public:
 	void setHeight(int x, int y, float h);
 	void setMoisture(int x, int y, float m);
 
-	void draw(...) const;
+	//void draw(...) const;
 };
 
 #endif

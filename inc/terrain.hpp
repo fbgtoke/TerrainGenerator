@@ -13,7 +13,7 @@ private:
 	static const unsigned int DEFAULT_ORIGIN_Y;
 	static const unsigned int DEFAULT_CHUNK_COUNT;
 
-	std::vector<TerrainChunk*> chunks;
+	std::set<TerrainChunk*> chunks;
 
 public:
 	Terrain(unsigned int s);
@@ -25,7 +25,7 @@ public:
 
 	unsigned int getSeed() const;
 
-	void draw(...) const;
+	//void draw(...) const;
 };
 
 #endif

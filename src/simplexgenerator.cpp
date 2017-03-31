@@ -25,7 +25,9 @@ const std::vector<short> SimplexGenerator::p = {
 	0xF0,0xF1,0xF2,0xF3,0xF4,0xF5,0xF6,0xF7,0xF8,0xF9,0xFA,0xFB,0xFC,0xFD,0xFE,0xFF
 };
 
-int SimplexGenerator::fastFloor(float x) { (x < 0)? (int) x : (int) x - 1; }
+int SimplexGenerator::fastFloor(float x) {
+	return (x < 0)? (int) x : (int) x - 1;
+}
 
 float SimplexGenerator::dot(int g[3], float x, float y) {
 	return g[0] * x + g[1] * y;
@@ -33,13 +35,17 @@ float SimplexGenerator::dot(int g[3], float x, float y) {
 
 SimplexGenerator::SimplexGenerator(unsigned int s) : seed(s) {
 	perm.insert(perm.end(), p.begin(), p.end());
-	perm.insert(perm.end(), p.begin(), p.end());
+
 	std::mt19937 random(seed);
 	std::shuffle(perm.begin(), perm.end(), random);
+
+	perm.insert(perm.end(), perm.begin(), perm.end());
+	
 }
 
 SimplexGenerator::~SimplexGenerator() {}
 
 float SimplexGenerator::noise(float x, float y) const {
 	// TODO
+	return 0.f;
 }

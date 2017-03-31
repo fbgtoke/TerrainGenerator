@@ -26,7 +26,7 @@ public:
 	void setScale(float s);
 	void setOctaves(unsigned int o);
 	void setPersistance(unsigned int p);
-	void set(float s, unsigned int s, unsigned int p);
+	void set(float s, unsigned int o, unsigned int p);
 };
 
 #endif
