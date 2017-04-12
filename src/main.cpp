@@ -1,24 +1,22 @@
 #include "utils.hpp"
-#include "terrain.hpp"
+#include "game.hpp"
 
 void usage() {
-	std::cout << "Usage: main SEED" << std::endl;
+	std::cout
+		<< "Usage: terrain [seed]" 							 << std::endl
+		<< "  Run the aplication with a given seed" 		 << std::endl
+		<< "  [seed] must be a 32bit unsigned integer value" << std::endl;
 
-	exit(0);
+	exit(1);
 }
 
 int main(int argc, char** argv) {
 	if (argc != 2)
 		usage();
 
-	unsigned int seed = atoi(argv[1]);
+	//uint32_t seed = atoi(argv[1]);
 
-	std::cout << "Seed: " << seed << std::endl;
-	std::cout << "Creating terrain" << std::endl;
+	Game::get()->run(argc, argv);
 
-	Terrain terrain(seed);
-
-	std::cout << "Generated" << std::endl;
-
-	while (1);
+	return 0;
 }

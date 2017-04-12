@@ -1,57 +1,31 @@
 #include "terrain.hpp"
 
-const unsigned int Terrain::DEFAULT_ORIGIN_X    = 0;
-const unsigned int Terrain::DEFAULT_ORIGIN_Y    = 0;
-const unsigned int Terrain::DEFAULT_CHUNK_COUNT = 2;
+const unsigned int Terrain::CHUNK_COUNT = 2;
 
-Terrain::Terrain(unsigned int s) : seed(s) {
-	load(DEFAULT_ORIGIN_X, DEFAULT_ORIGIN_Y, DEFAULT_CHUNK_COUNT);
-}
+Terrain::Terrain(uint32_t s) : seed(s) {
+	seed = s;
 
-Terrain::~Terrain() {
-	unloadAllChunks();
-}
+	unsigned int size = CHUNK_COUNT * CHUNK_COUNT;
 
+	for (unsigned int i = 0; i < size; ++i) {
+		int x = i % CHUNK_COUNT;
+		int z = i / CHUNK_COUNT;
 
-void Terrain::load(unsigned int x, unsigned int y, unsigned int nchunks) {
-	unloadAllChunks();
-
-	unsigned int i, j;
-	for (i = y; i < nchunks; ++i) {
-		for (j = x; j < nchunks; ++j) {
-			int offset_x = j * TerrainChunk::getChunkWidth();
-			int offset_y = i * TerrainChunk::getChunkHeight();
-
-			std::cout << "Loading chunk (" << offset_x << "," << offset_y << ")";
-			std::cout << " ... " << std::endl;
-
-			TerrainChunk* chunk = TerrainChunkLoader::load(offset_x, offset_y, seed);
-			chunks.insert(chunk);
-
-			std::cout << "Chunk loaded" << std::endl;
-		}
+		TerrainChunk* chunk = new TerrainChunk(seed, x, z);
+		chunks.insert(chunk);
 	}
 }
 
-void Terrain::unload(TerrainChunk* chunk) {
-	TerrainChunkLoader::unload(chunk);
-	chunks.erase(chunk);
-}
-
-void Terrain::unloadAllChunks() {
-	std::cout << "Unloading all chunks" << std::endl;
-
+Terrain::~Terrain() {
 	for (TerrainChunk* chunk : chunks)
-		TerrainChunkLoader::unload(chunk);
-
+		delete chunk;
 	chunks.clear();
-
-	std::cout << "All chunks unloaded" << std::endl;
 }
 
-unsigned int Terrain::getSeed() const { return seed; }
+void Terrain::event(unsigned char key, int x, int y) {}
+void Terrain::update() {}
 
-/*
-void Terrain::draw(...) const {
-	// TODO
-}*/
+void Terrain::draw() {
+	for (TerrainChunk* chunk : chunks)
+		chunk->draw();
+}

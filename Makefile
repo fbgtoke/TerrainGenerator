@@ -4,8 +4,7 @@ INC = inc
 SRC = src
 BIN = bin
 
-#LIBS = -lsfml-system -lsfml-window -lsfml-graphics -lsfml-audio
-LIBS =
+LIBS = -lGLEW -lglut -lGL
 
 CFLAGS = -std=c++14 -Wall -I$(INC)
 LFLAGS = $(LIBS)
@@ -13,10 +12,10 @@ LFLAGS = $(LIBS)
 _DEPS = 
 DEPS  =$(patsubst %,$(INC)/%,$(_DEPS)) 
 
-_OBJ = main.o terrain.o terrainchunk.o terrainchunkloader.o terrainchunkgenerator.o simplexgenerator.o
+_OBJ = main.o simplex.o game.o shaderloader.o terrain.o terrainchunk.o camera.o
 OBJ  = $(patsubst %,$(BIN)/%,$(_OBJ))
 
-OUT  = main
+OUT  = simplex
 
 $(BIN)/%.o: $(SRC)/%.cpp $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)

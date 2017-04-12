@@ -1,36 +1,46 @@
 #ifndef TERRAINCHUNK_HPP
 #define TERRAINCHUNK_HPP
 
-#include "utils.hpp"
+#include "gameobject.hpp"
+#include "simplex.hpp"
 
-class TerrainChunk {
+class TerrainChunk : public GameObject {
 private:
-	static const int CHUNK_WIDTH;
-	static const int CHUNK_HEIGHT;
-
 	int offset_x;
-	int offset_y;
+	int offset_z;
 
-	matrix_t height;
-	matrix_t moisture;
+	uint32_t seed;
+	static const float PERSISTANCE;
+	static const float FREQUENCY;
+	static const int OCTAVES;
+	static const float AMPLITUDE;
+
+	GLuint VAO;
+	GLuint VBO_vertices;
+	GLuint VBO_colors;
+	GLuint VBO_indexes;
+
+	std::vector<glm::vec3> vertices;
+	std::vector<unsigned int> indexes;
+
+	std::vector<glm::vec3> colors;
+
+	void generate();
+	void initIndexes();
+	
+	void freeVAO();
 
 public:
-	TerrainChunk(int offx, int offy);
+	static const unsigned int CHUNK_SIZE;
+
+	TerrainChunk(uint32_t s, int offx, int offz);
 	~TerrainChunk();
 
-	static int getChunkWidth();
-	static int getChunkHeight();
+	void initVAO();
 
-	int getOffsetX() const;
-	int getOffsetY() const;
-
-	float getHeight(int x, int y) const;
-	float getMoisture(int x, int y) const;
-
-	void setHeight(int x, int y, float h);
-	void setMoisture(int x, int y, float m);
-
-	//void draw(...) const;
+	void event(unsigned char key, int x, int y) final;
+	void update() final;
+	void draw() final;
 };
 
 #endif

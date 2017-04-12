@@ -1,31 +1,23 @@
 #ifndef TERRAIN_HPP
 #define TERRAIN_HPP
 
-#include "utils.hpp"
+#include "gameobject.hpp"
 #include "terrainchunk.hpp"
-#include "terrainchunkloader.hpp"
 
-class Terrain {
+class Terrain : public GameObject {
 private:
-	const unsigned int seed;
+	static const unsigned int CHUNK_COUNT;
 
-	static const unsigned int DEFAULT_ORIGIN_X;
-	static const unsigned int DEFAULT_ORIGIN_Y;
-	static const unsigned int DEFAULT_CHUNK_COUNT;
-
+	uint32_t seed;
 	std::set<TerrainChunk*> chunks;
 
 public:
-	Terrain(unsigned int s);
+	Terrain(uint32_t s);
 	~Terrain();
 
-	void load(unsigned int x, unsigned int y, unsigned int nchunks);
-	void unload(TerrainChunk* chunk);
-	void unloadAllChunks();
-
-	unsigned int getSeed() const;
-
-	//void draw(...) const;
+	void event(unsigned char key, int x, int y) final;
+	void update() final;
+	void draw() final;
 };
 
 #endif
