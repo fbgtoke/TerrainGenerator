@@ -8,6 +8,10 @@ const float Chunk::kSimplexFrequency = 1.f/64.f;
 const float Chunk::kSimplexMin = 0.f;
 const float Chunk::kSimplexMax = 5.f;
 
+const unsigned int Chunk::kFractalOctaves = 4;
+const float Chunk::kFractalLacunarity = 0.2f;
+const float Chunk::kFractalGain = 0.5f;
+
 Chunk::Chunk(int x, int z, const uint64_t& seed) : mSeed(seed), mOffsetX(x), mOffsetZ(z) {}
 
 Chunk::~Chunk() {}
@@ -47,8 +51,10 @@ glm::vec3 Chunk::getVertex(int x, int z) const {
     float coordX = (int)(x) + mOffsetX * (int)kChunkWidth;
     float coordZ = (int)(z) + mOffsetZ * (int)kChunkDepth;
 
+    float value = simplex.fractal(coordX, coordZ, kFractalOctaves, kFractalLacunarity, kFractalGain);
+
     vertex.x = ((int)(x) + mOffsetX * (int)kChunkWidth) * kTileSize;
-    vertex.y = simplex.getValue(coordX, coordZ);
+    vertex.y = value;
     vertex.z = ((int)(z) + mOffsetZ * (int)kChunkDepth) * kTileSize;
   } else {
     index = (unsigned int)z * kChunkWidth * 3 + (unsigned int)x * 3;
@@ -63,6 +69,8 @@ glm::vec3 Chunk::getVertex(int x, int z) const {
 
 void Chunk::calculateVertices() {
   unsigned int i, j;
+  float coordX, coordZ;
+  float value;
   Simplex2d simplex(mSeed, kSimplexFrequency, kSimplexMin, kSimplexMax);
 
   mNumVertices = kChunkDepth * kChunkWidth;
@@ -70,12 +78,13 @@ void Chunk::calculateVertices() {
 
   for (i = 0; i < kChunkDepth; ++i) {
     for (j = 0; j < kChunkWidth; ++j) {
-      float coordX = (int)(j) + mOffsetX * (int)kChunkWidth;
-      float coordZ = (int)(i) + mOffsetZ * (int)kChunkDepth;
+      coordX = (int)(j) + mOffsetX * (int)kChunkWidth;
+      coordZ = (int)(i) + mOffsetZ * (int)kChunkDepth;
+
+      value = simplex.fractal(coordX, coordZ, kFractalOctaves, kFractalLacunarity, kFractalGain);
 
       mVertices[i*kChunkWidth*3 + j*3 + 0] = ((int)(j) + mOffsetX * (int)kChunkWidth) * kTileSize;
-      //mVertices[i*kChunkWidth*3 + j*3 + 1] = simplex.getValue(coordX, coordZ);
-      mVertices[i*kChunkWidth*3 + j*3 + 1] = simplex.fractal(coordX, coordZ, 4, 0.2f, 0.5f);
+      mVertices[i*kChunkWidth*3 + j*3 + 1] = value;
       mVertices[i*kChunkWidth*3 + j*3 + 2] = ((int)(i) + mOffsetZ * (int)kChunkDepth) * kTileSize;
     }
   }

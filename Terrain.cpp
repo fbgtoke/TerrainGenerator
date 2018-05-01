@@ -1,5 +1,7 @@
 #include "Terrain.h"
 
+const glm::vec3 Terrain::lightDir = glm::vec3(1.0f, -1.0f, 0.5f);
+
 Terrain::Terrain(uint64_t seed) : mSeed(seed) {}
 
 Terrain::~Terrain() {
@@ -24,6 +26,7 @@ void Terrain::init() {
 void Terrain::update(unsigned int deltaTime) {}
 
 void Terrain::draw() {
+  glUniform3f(0, Terrain::lightDir.x, Terrain::lightDir.y, Terrain::lightDir.z);
   mTexture.use();
 
   for (Chunk* chunk : mChunks)

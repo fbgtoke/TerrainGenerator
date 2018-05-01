@@ -29,6 +29,10 @@ private:
   static const float kSimplexMin;
   static const float kSimplexMax;
 
+  static const unsigned int kFractalOctaves;
+  static const float kFractalLacunarity;
+  static const float kFractalGain;
+
   const uint64_t& mSeed;
   int mOffsetX;
   int mOffsetZ;

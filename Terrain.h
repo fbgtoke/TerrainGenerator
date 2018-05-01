@@ -24,6 +24,8 @@ private:
   uint64_t mSeed;
   std::list<Chunk*> mChunks;
 
+  static const glm::vec3 lightDir;
+
   Texture mTexture;
   //ProceduralTexture mTexture;
 };
