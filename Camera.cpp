@@ -3,7 +3,7 @@
 Camera::Camera() {
   setFOV(M_PI * 0.25f);
   setAspectRatio(1.f);
-  setZs(0.1f, 100.f);
+  setZs(0.1f, 1000.f);
   
   setOBS({20.f, 10.f, -10.f});
   setVRP({20.f,  0.f,  10.f});

@@ -10,13 +10,16 @@ Terrain::~Terrain() {
 
 void Terrain::init() {
   int i, j;
-  for (i = -10; i < 10; ++i) {
-    for (j = -10; j < 10; ++j) {
+  for (i = 0; i < 10; ++i) {
+    for (j = 0; j < 10; ++j) {
       loadChunk(j, i);
     }
   }
 
   //loadChunk(0, 0);
+  //loadChunk(1, 0);
+  //loadChunk(0, 1);
+  //loadChunk(1, 1);
 
   //mTexture.generate(256, 256, mSeed);
   mTexture.loadFromFile("textures/grass.jpg", TEXTURE_PIXEL_FORMAT_RGB);

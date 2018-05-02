@@ -55,6 +55,14 @@ void Scene::keyPressed(unsigned char key) {
   case 'S':
     mCamera.move({0.f, 0.f, -VEL});
     break;
+  case 'i':
+  case 'I':
+    mCamera.move({0.f, +VEL, 0.f});
+    break;
+  case 'k':
+  case 'K':
+    mCamera.move({0.f, -VEL, 0.f});
+    break;
   case 'q':
   case 'Q':
     mRunning = false;
