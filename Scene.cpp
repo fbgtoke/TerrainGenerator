@@ -1,5 +1,10 @@
 #include "Scene.h"
 
+const glm::vec3 Scene::lightDir = glm::vec3(1.0f, -1.0f, 0.5f);
+
+const float Scene::VEL   = 0.5f;
+const float Scene::ALPHA = M_PI * 1.f/8.f;
+
 Scene::Scene() {}
 
 Scene::~Scene() {
@@ -29,9 +34,10 @@ bool Scene::update(unsigned int deltaTime) {
 
 void Scene::draw() {
   mShaderProgram->use();
-  mShaderProgram->setUniformMatrix4f("PM", PM);
-  mShaderProgram->setUniformMatrix4f("VM", VM);
-  mShaderProgram->setUniformMatrix4f("TG", TG);
+  glUniformMatrix4fv(0, 1, GL_FALSE, glm::value_ptr(PM));
+  glUniformMatrix4fv(1, 1, GL_FALSE, glm::value_ptr(VM));
+
+  glUniform3f(4, lightDir.x, lightDir.y, lightDir.z);
 
   if (mTerrain != nullptr)
     mTerrain->draw();
@@ -67,6 +73,10 @@ void Scene::keyPressed(unsigned char key) {
   case 'Q':
     mRunning = false;
     break;
+  case '4': mTerrain->rotate(glm::vec3(0.f, -ALPHA, 0.f)); break;
+  case '6': mTerrain->rotate(glm::vec3(0.f, +ALPHA, 0.f)); break;
+  case '8': mTerrain->rotate(glm::vec3(-ALPHA, 0.f, 0.f)); break;
+  case '2': mTerrain->rotate(glm::vec3(+ALPHA, 0.f, 0.f)); break;
   }
 }
 

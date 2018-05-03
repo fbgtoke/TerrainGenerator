@@ -20,6 +20,8 @@ public:
   bool outOfBounds(int x, int z) const;
   glm::vec3 getVertex(int x, int z) const;
 
+  glm::mat4 getTransformMatrix() const;
+
 private:
   static const unsigned int kChunkWidth;
   static const unsigned int kChunkDepth;

@@ -20,11 +20,13 @@ public:
 
   void unloadAllChunks();
 
+  void rotate(const glm::vec3& rotation);
+
 private:
   uint64_t mSeed;
   std::list<Chunk*> mChunks;
 
-  static const glm::vec3 lightDir;
+  glm::vec3 mRotation = glm::vec3(0.f);
 
   Texture mTexture;
   //ProceduralTexture mTexture;

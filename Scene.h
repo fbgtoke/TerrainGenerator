@@ -21,12 +21,16 @@ public:
   void mouseMove(int x, int y);
 
 private:
+  static const glm::vec3 lightDir;
+
+  static const float VEL;
+  static const float ALPHA;
+
   bool mRunning = false;
 
   Terrain* mTerrain = nullptr;
   ShaderProgram* mShaderProgram = nullptr;
 
-  float VEL = 0.5f;
   Camera mCamera;
   glm::mat4 PM, VM, TG;
 };

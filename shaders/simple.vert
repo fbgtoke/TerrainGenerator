@@ -1,8 +1,9 @@
 #version 430
 
-layout(location = 1)uniform mat4 PM;
-layout(location = 2)uniform mat4 VM;
-layout(location = 3)uniform mat4 TG;
+layout(location = 0)uniform mat4 PM;
+layout(location = 1)uniform mat4 VM;
+layout(location = 2)uniform mat4 TG;
+layout(location = 3)uniform mat4 parentTG;
 
 layout(location = 0) in vec3 vertex;
 layout(location = 1) in vec3 normal;
@@ -17,6 +18,5 @@ void main() {
   FragNormal   = normal;
   FragTexcoord = texcoord;
 
-	//gl_Position = PM * VM * TG * vec4(vertex, 1.0);
-  gl_Position = PM * VM * vec4(vertex, 1.0);
+	gl_Position = PM * VM * parentTG * TG * vec4(vertex, 1.0);
 }

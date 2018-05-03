@@ -30,6 +30,11 @@ void Chunk::generate() {
 void Chunk::draw() {
   if (mVertices == nullptr) return;
 
+  glm::mat4 TG = getTransformMatrix();
+  glUniformMatrix4fv(2, 1, GL_FALSE, glm::value_ptr(TG));
+
+  glUniform3f(5, 0.f, (float)mOffsetZ/5.f, (float)mOffsetX/5.f);
+
   glBindVertexArray(mVAO);
   glDrawElements(GL_TRIANGLES, mNumIndices * 3, GL_UNSIGNED_INT, nullptr);
   glBindVertexArray(0);
@@ -53,9 +58,9 @@ glm::vec3 Chunk::getVertex(int x, int z) const {
 
     float value = simplex.fractal(coordX, coordZ, kFractalOctaves, kFractalLacunarity, kFractalGain);
 
-    vertex.x = coordX * kTileSize;
+    vertex.x = (float)x * kTileSize;
     vertex.y = value;
-    vertex.z = coordZ * kTileSize;
+    vertex.z = (float)z * kTileSize;
   } else {
     index = (unsigned int)z * (kChunkWidth+1) * 3 + (unsigned int)x * 3;
     
@@ -65,6 +70,25 @@ glm::vec3 Chunk::getVertex(int x, int z) const {
   }
 
   return vertex;
+}
+
+glm::mat4 Chunk::getTransformMatrix() const {
+  glm::mat4 TG;
+  glm::vec3 origin, center;
+
+  origin.x = (kChunkWidth*0.5f) * kTileSize;
+  origin.y = 0.f;
+  origin.z = (kChunkDepth*0.5f) * kTileSize;
+
+  center.x = kChunkWidth * (float)mOffsetX * kTileSize;
+  center.y = 0.f;
+  center.z = kChunkDepth * (float)mOffsetZ * kTileSize;
+
+  TG = glm::mat4(1.f);
+  TG = glm::translate(TG, center);
+  TG = glm::translate(TG, origin * -1.f);
+
+  return TG;
 }
 
 void Chunk::calculateVertices() {
@@ -83,9 +107,9 @@ void Chunk::calculateVertices() {
 
       value = simplex.fractal(coordX, coordZ, kFractalOctaves, kFractalLacunarity, kFractalGain);
 
-      mVertices[i*(kChunkWidth+1)*3 + j*3 + 0] = coordX * kTileSize;
+      mVertices[i*(kChunkWidth+1)*3 + j*3 + 0] = (float)j * kTileSize;
       mVertices[i*(kChunkWidth+1)*3 + j*3 + 1] = value;
-      mVertices[i*(kChunkWidth+1)*3 + j*3 + 2] = coordZ * kTileSize;
+      mVertices[i*(kChunkWidth+1)*3 + j*3 + 2] = (float)i * kTileSize;
     }
   }
 }

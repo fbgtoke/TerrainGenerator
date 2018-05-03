@@ -1,7 +1,5 @@
 #include "Terrain.h"
 
-const glm::vec3 Terrain::lightDir = glm::vec3(1.0f, -1.0f, 0.5f);
-
 Terrain::Terrain(uint64_t seed) : mSeed(seed) {}
 
 Terrain::~Terrain() {
@@ -10,8 +8,8 @@ Terrain::~Terrain() {
 
 void Terrain::init() {
   int i, j;
-  for (i = 0; i < 10; ++i) {
-    for (j = 0; j < 10; ++j) {
+  for (i = 0; i < 5; i += 2) {
+    for (j = 0; j < 5; j += 2) {
       loadChunk(j, i);
     }
   }
@@ -29,8 +27,14 @@ void Terrain::init() {
 void Terrain::update(unsigned int deltaTime) {}
 
 void Terrain::draw() {
-  glUniform3f(0, Terrain::lightDir.x, Terrain::lightDir.y, Terrain::lightDir.z);
   mTexture.use();
+
+  glm::mat4 TG;
+  TG = glm::mat4(1.f);
+  TG = glm::rotate(TG, mRotation.x, glm::vec3(1.f, 0.f, 0.f));
+  TG = glm::rotate(TG, mRotation.y, glm::vec3(0.f, 1.f, 0.f));
+  TG = glm::rotate(TG, mRotation.z, glm::vec3(0.f, 0.f, 1.f));
+  glUniformMatrix4fv(3, 1, GL_FALSE, glm::value_ptr(TG));
 
   for (Chunk* chunk : mChunks)
     chunk->draw();
@@ -63,3 +67,5 @@ void Terrain::unloadAllChunks() {
     delete chunk;
   mChunks.clear();
 }
+
+void Terrain::rotate(const glm::vec3& rotation) { mRotation += rotation; }
