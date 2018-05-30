@@ -1,7 +1,7 @@
 #include "Chunk.h"
 
-const unsigned int Chunk::kChunkWidth = 64;
-const unsigned int Chunk::kChunkDepth = 64;
+const unsigned int Chunk::kChunkWidth = 128;
+const unsigned int Chunk::kChunkDepth = 128;
 const float Chunk::kTileSize = .2f;
 
 const float Chunk::kSimplexFrequency = 1.f/64.f;

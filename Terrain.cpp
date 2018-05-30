@@ -8,8 +8,8 @@ Terrain::~Terrain() {
 
 void Terrain::init() {
   int i, j;
-  for (i = 0; i < 5; i += 2) {
-    for (j = 0; j < 5; j += 2) {
+  for (i = 0; i < 30; i += 1) {
+    for (j = 0; j < 35; j += 1) {
       loadChunk(j, i);
     }
   }

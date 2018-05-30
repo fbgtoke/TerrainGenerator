@@ -6,7 +6,8 @@ static Scene scene;
 
 void init() {
   glClearColor(1.f, 0.f, 0.f, 1.f);
-  glEnable(GL_CULL_FACE | GL_DEPTH_TEST);
+  glEnable(GL_CULL_FACE);
+  glEnable(GL_DEPTH_TEST);
   glCullFace(GL_FRONT);
 
   scene.init();
