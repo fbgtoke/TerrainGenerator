@@ -6,11 +6,14 @@ const float Chunk::kTileSize = .2f;
 
 const float Chunk::kSimplexFrequency = 1.f/64.f;
 const float Chunk::kSimplexMin = 0.f;
-const float Chunk::kSimplexMax = 5.f;
+const float Chunk::kSimplexMax = 3.f;
 
-const unsigned int Chunk::kFractalOctaves = 4;
-const float Chunk::kFractalLacunarity = 0.2f;
+const unsigned int Chunk::kFractalOctaves = 10;
+const float Chunk::kFractalLacunarity = 1.5f;
 const float Chunk::kFractalGain = 0.5f;
+
+unsigned int Chunk::getkChunkWidth() { return kChunkWidth; }
+unsigned int Chunk::getkChunkDepth() { return kChunkDepth; }
 
 Chunk::Chunk(int x, int z, const uint64_t& seed) : mSeed(seed), mOffsetX(x), mOffsetZ(z) {}
 

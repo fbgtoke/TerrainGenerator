@@ -104,8 +104,12 @@ float Simplex2d::fractal(float x, float y, unsigned int octaves, float lacunarit
   float value = 0.f;
   float f = mFrequency;
   float a = mMax - mMin;
+
+  float v;
+  //#pragma omp parallel for reduction(+:value) shared(x, y, octaves) private(f, a, i, v)
   for (i = 0; i < octaves; ++i) {
-    value += a * noise(x, y, f, 0.f, 1.f, mPermutations);
+    v = a * noise(x, y, f, 0.f, 1.f, mPermutations);
+    value += v;
 
     f *= lacunarity;
     a *= gain;

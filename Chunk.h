@@ -22,6 +22,9 @@ public:
 
   glm::mat4 getTransformMatrix() const;
 
+  static unsigned int getkChunkWidth();
+  static unsigned int getkChunkDepth();
+
 private:
   static const unsigned int kChunkWidth;
   static const unsigned int kChunkDepth;

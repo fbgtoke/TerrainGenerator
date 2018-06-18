@@ -7,12 +7,28 @@ Terrain::~Terrain() {
 }
 
 void Terrain::init() {
-  int i, j;
-  for (i = 0; i < 30; i += 1) {
-    for (j = 0; j < 35; j += 1) {
+  const unsigned int nChunksZ = 5;
+  const unsigned int nChunksX = 5;
+
+  unsigned int i, j;
+  clock_t begin, end;
+  double elapsed;
+
+  std::cout << "Generating chunks...\n"
+            << "Chunk size:   " << Chunk::getkChunkWidth() << "x" << Chunk::getkChunkDepth() << "\n"
+            << "Terrain size: " << nChunksX << "x" << nChunksZ << " chunks\n\n"
+            << std::flush;
+
+  begin = clock();
+  for (i = 0; i < nChunksZ; i += 1) {
+    for (j = 0; j < nChunksX; j += 1) {
       loadChunk(j, i);
     }
   }
+  end = clock();
+
+  elapsed = double(end - begin) / CLOCKS_PER_SEC;
+  std::cout << "Elapsed time: " << elapsed << "s" << std::endl;
 
   //loadChunk(0, 0);
   //loadChunk(1, 0);
